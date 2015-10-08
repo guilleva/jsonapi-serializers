@@ -405,6 +405,21 @@ describe JSONAPI::Serializer do
         ],
       })
     end
+    it 'handles include of simple to-one relationship with custom serializer' do
+      post = create(:post, :with_reviewer)
+
+      expected_primary_data = serialize_primary(post, {
+        serializer: MyApp::CustomPostSerializer,
+        include_linkages: ['reviewer'],
+      })
+      result = JSONAPI::Serializer.serialize(
+        post, serializer: MyApp::CustomPostSerializer, include: ['reviewer'])
+      expect(result['included']).to eq(
+        [
+          serialize_primary(post.reviewer, {serializer: MyApp::UserSerializer}),
+        ],
+      )
+    end
     it 'handles include of empty to-many relationships with compound document' do
       post = create(:post, :with_author, long_comments: [])
 

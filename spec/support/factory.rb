@@ -10,6 +10,9 @@ FactoryGirl.define do
     trait :with_author do
       association :author, factory: :user
     end
+    trait :with_reviewer do
+      association :reviewer, factory: :user
+    end
   end
 
   factory :long_comment, class: MyApp::LongComment do

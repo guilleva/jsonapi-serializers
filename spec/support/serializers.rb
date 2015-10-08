@@ -5,6 +5,7 @@ module MyApp
     attr_accessor :body
     attr_accessor :author
     attr_accessor :long_comments
+    attr_accessor :reviewer
   end
 
   class LongComment
@@ -29,6 +30,12 @@ module MyApp
 
     has_one :author
     has_many :long_comments
+  end
+
+  class CustomPostSerializer
+    include JSONAPI::Serializer
+
+    has_one :reviewer
   end
 
   class LongCommentSerializer
